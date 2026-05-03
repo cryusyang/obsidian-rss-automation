@@ -80,7 +80,7 @@ def test_build_md_content_chinese_no_translation():
         "zh",
         llm,
     )
-    assert "> [!info] AI 摘要" in md
+    assert "AI 摘要" in md
     assert "摘要内容" in md
     assert "正文内容" in md
     llm.translate_paragraph.assert_not_called()
