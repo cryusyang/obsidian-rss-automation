@@ -3,7 +3,14 @@ from unittest.mock import MagicMock, patch
 
 import feedparser
 
-from scripts.fetch_rss import extract_entry_body, extract_entry_html, load_existing_urls, process_feed
+from scripts.fetch_rss import (
+    extract_entry_body,
+    extract_entry_html,
+    load_existing_urls,
+    load_seen_urls,
+    process_feed,
+    save_seen_urls,
+)
 
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -27,6 +34,29 @@ def test_load_existing_urls_reads_frontmatter(tmp_path):
         encoding="utf-8",
     )
     assert "https://example.com/a" in load_existing_urls(input_dir, output_dir)
+
+
+def test_seen_urls_round_trip(tmp_path):
+    seen_file = tmp_path / "A-🔴INPUTS/(C)-🟡RSS/.seen_urls.yml"
+    save_seen_urls(seen_file, {"https://example.com/a", "https://example.com/b"})
+    assert load_seen_urls(seen_file) == {"https://example.com/a", "https://example.com/b"}
+
+
+def test_process_feed_skips_url_recorded_in_seen_file_even_after_md_deleted(tmp_path):
+    llm = MagicMock()
+    llm.generate_summary.return_value = "摘要"
+    seen_file = tmp_path / "A-🔴INPUTS/(C)-🟡RSS/.seen_urls.yml"
+    save_seen_urls(seen_file, {"https://mp.weixin.qq.com/s/ZJ3YxynhZ2OS_w9RysIMWA"})
+
+    count = process_feed(
+        {"name": "思维重构", "url": str(ROOT / "rss1.md")},
+        load_seen_urls(seen_file),
+        llm,
+        tmp_path / "Input",
+    )
+
+    assert count == 0
+    assert list((tmp_path / "Input").glob("*.md")) == []
 
 
 def test_extract_entry_body_prefers_content_encoded_over_summary():

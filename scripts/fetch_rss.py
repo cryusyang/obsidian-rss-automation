@@ -15,6 +15,11 @@ from scripts.article_processor import (
 )
 from scripts.llm_client import LLMClient
 
+RSS_SUBPATH = "A-🔴INPUTS/(C)-🟡RSS"
+INPUT_SUBPATH = f"{RSS_SUBPATH}/Input"
+OUTPUT_SUBPATH = f"{RSS_SUBPATH}/Output"
+SEEN_URLS_SUBPATH = f"{RSS_SUBPATH}/.seen_urls.yml"
+
 
 def load_existing_urls(input_dir: Path, output_dir: Path) -> set[str]:
     urls: set[str] = set()
@@ -26,6 +31,21 @@ def load_existing_urls(input_dir: Path, output_dir: Path) -> set[str]:
         if post.get("url"):
             urls.add(post["url"])
     return urls
+
+
+def load_seen_urls(seen_file: Path) -> set[str]:
+    if not seen_file.exists():
+        return set()
+    with open(seen_file, encoding="utf-8") as f:
+        data = yaml.safe_load(f) or {}
+    urls = data.get("urls", []) if isinstance(data, dict) else data
+    return {str(url) for url in urls or []}
+
+
+def save_seen_urls(seen_file: Path, urls: set[str]) -> None:
+    seen_file.parent.mkdir(parents=True, exist_ok=True)
+    with open(seen_file, "w", encoding="utf-8") as f:
+        yaml.safe_dump({"urls": sorted(urls)}, f, allow_unicode=True, sort_keys=False)
 
 
 def extract_entry_body(entry) -> str:
@@ -95,15 +115,17 @@ def main() -> None:
     with open(config_path, encoding="utf-8") as f:
         config = yaml.safe_load(f)
     notes_repo = Path(os.environ["NOTES_REPO_PATH"])
-    input_dir = notes_repo / "A-🔴INPUTS/(C)-🟡RSS/Input"
-    output_dir = notes_repo / "A-🔴INPUTS/(C)-🟡RSS/Output"
+    input_dir = notes_repo / INPUT_SUBPATH
+    output_dir = notes_repo / OUTPUT_SUBPATH
+    seen_file = notes_repo / SEEN_URLS_SUBPATH
     llm = LLMClient(str(config_path))
-    existing_urls = load_existing_urls(input_dir, output_dir)
+    existing_urls = load_existing_urls(input_dir, output_dir) | load_seen_urls(seen_file)
     total = 0
     for feed in config["feeds"]:
         n = process_feed(feed, existing_urls, llm, input_dir)
         print(f"[{feed['name']}] {n} new articles")
         total += n
+    save_seen_urls(seen_file, existing_urls)
     print(f"Total: {total} new articles")
 
 
