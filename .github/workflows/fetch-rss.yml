@@ -14,17 +14,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout automation repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Checkout notes repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           repository: ${{ github.repository_owner }}/obsidian-notes
           token: ${{ secrets.PAT_NOTES_REPO }}
           path: notes-repo
 
       - name: Set up Python 3.11
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: "3.11"
           cache: pip
@@ -39,6 +39,14 @@ jobs:
           DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
         run: python -m scripts.fetch_rss
 
+      - name: Show generated article changes
+        working-directory: notes-repo
+        run: |
+          echo "Git status after RSS fetch:"
+          git status --short
+          echo "Input files:"
+          find "A-🔴INPUTS/(C)-🟡RSS/Input" -maxdepth 1 -type f -name "*.md" | sort | tail -20
+
       - name: Commit and push to notes repo
         working-directory: notes-repo
         run: |
@@ -48,7 +56,6 @@ jobs:
           if git diff --cached --quiet; then
             echo "No new articles"
           else
-            git pull --rebase origin main
             git commit -m "feat: add RSS articles $(date +%Y-%m-%d)"
-            git push
+            git push origin HEAD:main
           fi
