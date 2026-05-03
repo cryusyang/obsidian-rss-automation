@@ -65,7 +65,7 @@ def build_md_content(
     translate: bool = False,
 ) -> str:
     frontmatter = build_frontmatter(title, url, source, pub_date, language)
-    callout = f"> [!info] AI 摘要\n> {summary}"
+    callout = f"> [!example] AI 摘要\n> {summary}"
     body = body_content
     if translate and language == "en" and llm_client:
         translations = []
