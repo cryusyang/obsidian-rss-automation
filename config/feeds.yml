@@ -1,0 +1,25 @@
+settings:
+  cleanup_days: 3
+  llm_primary: qwen
+  llm_fallback: deepseek
+
+llm:
+  qwen:
+    base_url: "https://dashscope.aliyuncs.com/compatible-mode/v1"
+    model: "qwen-plus"
+    api_key_env: "QWEN_API_KEY"
+  deepseek:
+    base_url: "https://api.deepseek.com"
+    model: "deepseek-chat"
+    api_key_env: "DEEPSEEK_API_KEY"
+    thinking: false
+
+feeds:
+  - name: "思维重构"
+    url: "http://180.76.102.108:8001/feed/MP_WXS_3990222825.rss"
+    type: wechat
+    Translate: false
+  - name: "Medium-Imran-Hossain"
+    url: "https://medium.com/feed/@s41n1k"
+    type: medium
+    Translate: false
