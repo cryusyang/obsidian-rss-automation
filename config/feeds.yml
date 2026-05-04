@@ -19,7 +19,263 @@ feeds:
     url: "http://180.76.102.108:8001/feed/MP_WXS_3990222825.rss"
     type: wechat
     Translate: false
+
+  - name: "孤独大脑"
+    url: "http://180.76.102.108:8001/feed/MP_WXS_2398022876.rss"
+    type: wechat
+    Translate: false
+
   - name: "Medium-Imran-Hossain"
     url: "https://medium.com/feed/@s41n1k"
+    type: medium
+    Translate: false
+
+  - name: "DEep"
+    url: "https://medium.com/feed/@deepk007"
+    type: medium
+    Translate: false
+
+  - name: "Raptitude"
+    url: "https://www.raptitude.com/feed/"
+    type: rss
+    Translate: true
+
+  - name: "The Marginalian"
+    url: "https://www.themarginalian.org/feed/"
+    type: rss
+    Translate: true
+
+  - name: "Ness Labs"
+    url: "https://nesslabs.com/feed/"
+    type: rss
+    Translate: true
+
+  - name: "Scott H Young"
+    url: "https://www.scotthyoung.com/blog/feed/"
+    type: rss
+    Translate: true
+
+  - name: "Steve Pavlina"
+    url: "https://www.stevepavlina.com/feed/"
+    type: rss
+    Translate: true
+
+  - name: "Greater Good"
+    url: "https://greatergood.berkeley.edu/rss"
+    type: rss
+    Translate: true
+
+  - name: "Becoming Minimalist"
+    url: "https://www.becomingminimalist.com/feed/"
+    type: rss
+    Translate: true
+
+  - name: "Barking Up The Wrong Tree"
+    url: "https://bakadesuyo.com/feed/"
+    type: rss
+    Translate: true
+
+  - name: "Tiny Buddha"
+    url: "https://tinybuddha.com/feed/"
+    type: rss
+    Translate: true
+
+  - name: "Cal Newport"
+    url: "https://calnewport.com/blog/feed/"
+    type: rss
+    Translate: true
+
+  - name: "Forte Labs"
+    url: "https://fortelabs.com/feed/"
+    type: rss
+    Translate: true
+
+  - name: "Sebastien Dubois"
+    url: "https://www.dsebastien.net/rss/"
+    type: rss
+    Translate: true
+
+  - name: "Enterprise Knowledge"
+    url: "https://enterprise-knowledge.com/feed/"
+    type: rss
+    Translate: true
+
+  - name: "Harvard PON"
+    url: "https://www.pon.harvard.edu/feed/"
+    type: rss
+    Translate: true
+
+  - name: "Shapiro Negotiations"
+    url: "https://www.shapironegotiations.com/feed/"
+    type: rss
+    Translate: true
+
+  - name: "influencePEOPLE"
+    url: "https://influencepeople.biz/feed/"
+    type: rss
+    Translate: true
+
+  - name: "Ask a Manager"
+    url: "https://www.askamanager.org/feed"
+    type: rss
+    Translate: true
+
+  - name: "LeadershipNow"
+    url: "https://www.leadershipnow.com/leadingblog/atom.xml"
+    type: atom
+    Translate: true
+
+  - name: "Overcoming Bias"
+    url: "https://www.overcomingbias.com/feed"
+    type: rss
+    Translate: true
+
+  - name: "The Scholars Stage"
+    url: "https://scholars-stage.org/feed/"
+    type: rss
+    Translate: true
+
+  - name: "迪哥讲事"
+    url: "http://180.76.102.108:8001/feed/MP_WXS_3231235340.rss"
+    type: wechat
+    Translate: false
+
+  - name: "大脑重塑计划"
+    url: "http://180.76.102.108:8001/feed/MP_WXS_3072998709.rss"
+    type: wechat
+    Translate: false
+
+  - name: "数字生命卡茲克"
+    url: "http://180.76.102.108:8001/feed/MP_WXS_3223096120.rss"
+    type: wechat
+    Translate: false
+
+  - name: "Rsec"
+    url: "http://180.76.102.108:8001/feed/MP_WXS_3084495540.rss"
+    type: wechat
+    Translate: false
+
+  - name: "骨哥说事"
+    url: "http://180.76.102.108:8001/feed/MP_WXS_2393783531.rss"
+    type: wechat
+    Translate: false
+
+  - name: "安全狗的自我修养"
+    url: "http://180.76.102.108:8001/feed/MP_WXS_3909190694.rss"
+    type: wechat
+    Translate: false
+
+  - name: "小钰的书摘"
+    url: "http://180.76.102.108:8001/feed/MP_WXS_3883741116.rss"
+    type: wechat
+    Translate: false
+
+  - name: "PKMer知识社区"
+    url: "http://180.76.102.108:8001/feed/MP_WXS_3935521800.rss"
+    type: wechat
+    Translate: false
+
+  - name: "老张投资笔记"
+    url: "http://180.76.102.108:8001/feed/MP_WXS_3254914879.rss"
+    type: wechat
+    Translate: false
+
+  - name: "跨境风向标"
+    url: "http://180.76.102.108:8001/feed/MP_WXS_3906579936.rss"
+    type: wechat
+    Translate: false
+
+  - name: "渗透安全HackTwo"
+    url: "http://180.76.102.108:8001/feed/MP_WXS_3878162911.rss"
+    type: wechat
+    Translate: false
+
+  - name: "钱老板创业记"
+    url: "http://180.76.102.108:8001/feed/MP_WXS_3942466596.rss"
+    type: wechat
+    Translate: false
+
+  - name: "郭拽拽"
+    url: "http://180.76.102.108:8001/feed/MP_WXS_3909397489.rss"
+    type: wechat
+    Translate: false
+
+  - name: "小北的梦呓"
+    url: "http://180.76.102.108:8001/feed/MP_WXS_3088688535.rss"
+    type: wechat
+    Translate: false
+
+  - name: "神农Sec"
+    url: "http://180.76.102.108:8001/feed/MP_WXS_3943751267.rss"
+    type: wechat
+    Translate: false
+
+  - name: "西羊石AI视频"
+    url: "http://180.76.102.108:8001/feed/MP_WXS_3944591978.rss"
+    type: wechat
+    Translate: false
+
+  - name: "落落的穿搭笔记"
+    url: "http://180.76.102.108:8001/feed/MP_WXS_3881535963.rss"
+    type: wechat
+    Translate: false
+
+  - name: "Hack分享吧"
+    url: "http://180.76.102.108:8001/feed/MP_WXS_3087552983.rss"
+    type: wechat
+    Translate: false
+
+  - name: "Medium-Imran-Hossain"
+    url: "https://medium.com/feed/@s41n1k"
+    type: medium
+    Translate: false
+
+  - name: "Aland Dlshad (HexaPhp)"
+    url: "https://medium.com/feed/@hexaphp"
+    type: medium
+    Translate: false
+
+  - name: "Mohsin"
+    url: "https://medium.com/feed/@mokhansec"
+    type: medium
+    Translate: false
+
+  - name: "zack0x01"
+    url: "https://medium.com/feed/@zack0x01_"
+    type: medium
+    Translate: false
+
+  - name: "Salah"
+    url: "https://medium.com/feed/@MoSalah11"
+    type: medium
+    Translate: false
+
+  - name: "bombon"
+    url: "https://medium.com/feed/@bxmbn"
+    type: medium
+    Translate: false
+
+  - name: "0xoroot"
+    url: "https://medium.com/feed/@0xoroot"
+    type: medium
+    Translate: false
+
+  - name: "Red Darkin"
+    url: "https://medium.com/feed/@red_darkin"
+    type: medium
+    Translate: false
+
+  - name: "elcezeri"
+    url: "https://medium.com/feed/@xelcezeri"
+    type: medium
+    Translate: false
+
+  - name: "Abhi Sharma"
+    url: "https://medium.com/feed/@a13h1"
+    type: medium
+    Translate: false
+    
+  - name: "DEep"
+    url: "https://medium.com/feed/@deepk007"
     type: medium
     Translate: false
