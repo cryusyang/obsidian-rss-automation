@@ -23,3 +23,7 @@ feeds:
     url: "https://medium.com/feed/@s41n1k"
     type: medium
     Translate: false
+  - name: "Stories by Jud Brewer MD PhD on Medium"
+    url: "https://medium.com/feed/@jud.brewer"
+    type: medium
+    Translate: true
