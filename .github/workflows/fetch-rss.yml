@@ -23,7 +23,7 @@ jobs:
       - name: Checkout notes repo
         uses: actions/checkout@v6
         with:
-          repository: ${{ github.repository_owner }}/obsidian-notes
+          repository: ${{ github.repository_owner }}/yanceyPKM
           token: ${{ secrets.PAT_NOTES_REPO }}
           path: notes-repo
 
