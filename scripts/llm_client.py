@@ -49,6 +49,21 @@ class LLMClient:
             ]
         )
 
+    def translate_article(self, text: str) -> str:
+        """Translate a full article body in one API call instead of paragraph by paragraph."""
+        return self.call(
+            [
+                {
+                    "role": "system",
+                    "content": (
+                        "你是专业英译中助手。将英文文章翻译为中文，保持原意和段落结构。"
+                        "保留原文段落换行，只输出译文，不要输出原文。"
+                    ),
+                },
+                {"role": "user", "content": text[:30000]},
+            ]
+        )
+
     def translate_paragraph(self, paragraph: str) -> str:
         return self.call(
             [

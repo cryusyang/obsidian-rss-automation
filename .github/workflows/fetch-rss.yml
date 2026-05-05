@@ -51,7 +51,7 @@ jobs:
           echo "Input files:"
           find "A-🔴INPUTS/(C)-🟡RSS/Input" -maxdepth 1 -type f -name "*.md" | sort | tail -20
 
-      - name: Commit and push to notes repo
+      - name: Final commit (catch any remaining uncommitted files)
         working-directory: notes-repo
         run: |
           git config user.name "github-actions[bot]"
@@ -59,7 +59,7 @@ jobs:
           git add "A-🔴INPUTS/(C)-🟡RSS/Input/"
           git add "A-🔴INPUTS/(C)-🟡RSS/.seen_urls.yml"
           if git diff --cached --quiet; then
-            echo "No new articles"
+            echo "All articles already committed incrementally"
           else
             git commit -m "feat: add RSS articles $(date +%Y-%m-%d)"
             git push origin HEAD:main

@@ -68,14 +68,9 @@ def build_md_content(
     callout = f"> [!example] AI 摘要\n> {summary}"
     body = body_content
     if translate and language == "en" and llm_client:
-        translations = []
-        for paragraph in split_paragraphs(body_text):
-            if len(paragraph) < 20:
-                continue
-            translation = llm_client.translate_paragraph(paragraph)
-            translations.append(f"{paragraph}\n\n> {translation}")
-        if translations:
-            body = f"{body}\n\n## 中文对照\n\n" + "\n\n".join(translations)
+        translation = llm_client.translate_article(body_text)
+        if translation:
+            body = f"{body}\n\n## 中文译文\n\n{translation}"
     return f"{frontmatter}\n\n{callout}\n\n---\n\n{body}\n"
 
 

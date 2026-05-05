@@ -1,4 +1,7 @@
 import os
+import subprocess
+import threading
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime
 from email.utils import parsedate_to_datetime
 from pathlib import Path
@@ -76,21 +79,33 @@ def _entry_pub_date(entry) -> str:
     return datetime.today().date().isoformat()
 
 
+WORKERS = 5  # concurrent articles per feed; stay well under 300 RPM rate limit
+
+
 def process_feed(feed_config: dict, existing_urls: set[str], llm: LLMClient, output_dir: Path) -> int:
     parsed = feedparser.parse(feed_config["url"])
-    count = 0
     output_dir.mkdir(parents=True, exist_ok=True)
-    for entry in parsed.entries:
+    should_translate = bool(feed_config.get("Translate", feed_config.get("translate", False)))
+
+    lock = threading.Lock()
+    count = 0
+
+    def process_entry(entry) -> bool:
         url = entry.get("link") or entry.get("guid") or entry.get("id") or ""
-        if not url or url in existing_urls:
-            continue
+        if not url:
+            return False
+        # Claim the URL under lock to prevent duplicate processing across threads
+        with lock:
+            if url in existing_urls:
+                return False
+            existing_urls.add(url)
+
         title = entry.get("title", "Untitled").strip() or "Untitled"
         body_html = extract_entry_html(entry)
         body_text = strip_html(body_html) if body_html else ""
         pub_date = _entry_pub_date(entry)
         language = detect_language(body_text)
         summary = llm.generate_summary(body_text) if body_text else "（无正文内容）"
-        should_translate = bool(feed_config.get("Translate", feed_config.get("translate", False)))
         md_content = build_md_content(
             title=title,
             url=url,
@@ -105,9 +120,43 @@ def process_feed(feed_config: dict, existing_urls: set[str], llm: LLMClient, out
         )
         filename = make_filename(pub_date, title)
         (output_dir / filename).write_text(md_content, encoding="utf-8")
-        existing_urls.add(url)
-        count += 1
+        return True
+
+    with ThreadPoolExecutor(max_workers=WORKERS) as executor:
+        futures = [executor.submit(process_entry, e) for e in parsed.entries]
+        for fut in as_completed(futures):
+            try:
+                if fut.result():
+                    count += 1
+            except Exception as e:
+                print(f"  [warn] article failed: {e}")
+
     return count
+
+
+def git_commit_push(notes_repo: Path, feed_name: str) -> None:
+    """Commit and push any new files after each feed so progress is never lost."""
+    env = {**os.environ, "GIT_AUTHOR_NAME": "github-actions[bot]",
+           "GIT_AUTHOR_EMAIL": "github-actions[bot]@users.noreply.github.com",
+           "GIT_COMMITTER_NAME": "github-actions[bot]",
+           "GIT_COMMITTER_EMAIL": "github-actions[bot]@users.noreply.github.com"}
+
+    subprocess.run(["git", "add",
+                    f"{INPUT_SUBPATH}/",
+                    SEEN_URLS_SUBPATH],
+                   cwd=notes_repo, env=env, check=False)
+
+    result = subprocess.run(["git", "diff", "--cached", "--quiet"],
+                            cwd=notes_repo, env=env)
+    if result.returncode == 0:
+        return  # nothing to commit
+
+    subprocess.run(["git", "commit", "-m",
+                    f"feat: add articles from {feed_name}"],
+                   cwd=notes_repo, env=env, check=True)
+    subprocess.run(["git", "push", "origin", "HEAD:main"],
+                   cwd=notes_repo, env=env, check=True)
+    print(f"  → committed & pushed")
 
 
 def main() -> None:
@@ -124,8 +173,10 @@ def main() -> None:
     for feed in config["feeds"]:
         n = process_feed(feed, existing_urls, llm, input_dir)
         print(f"[{feed['name']}] {n} new articles")
+        if n > 0:
+            save_seen_urls(seen_file, existing_urls)
+            git_commit_push(notes_repo, feed["name"])
         total += n
-    save_seen_urls(seen_file, existing_urls)
     print(f"Total: {total} new articles")
 
 
