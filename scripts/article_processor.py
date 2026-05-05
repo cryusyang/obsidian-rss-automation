@@ -68,12 +68,12 @@ def build_md_content(
     callout = f"> [!example] AI 摘要\n> {summary}"
     body = body_content
     if translate and language == "en" and llm_client:
-        translation = llm_client.translate_article(body_text)
+        translation = llm_client.translate_article(body_content)
         if translation:
-            body = f"{body}\n\n## 中文译文\n\n{translation}"
+            body = translation
     return f"{frontmatter}\n\n{callout}\n\n---\n\n{body}\n"
 
 
-def make_filename(pub_date: str, title: str) -> str:
+def make_filename(title: str) -> str:
     slug = slugify(title) or "untitled"
-    return f"{pub_date}-{slug}.md"
+    return f"{slug}.md"

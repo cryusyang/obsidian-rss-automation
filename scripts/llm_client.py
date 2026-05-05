@@ -49,18 +49,22 @@ class LLMClient:
             ]
         )
 
-    def translate_article(self, text: str) -> str:
-        """Translate a full article body in one API call instead of paragraph by paragraph."""
+    def translate_article(self, html: str) -> str:
+        """Convert HTML to Obsidian Markdown and output bilingual paragraph interleave."""
         return self.call(
             [
                 {
                     "role": "system",
                     "content": (
-                        "你是专业英译中助手。将英文文章翻译为中文，保持原意和段落结构。"
-                        "保留原文段落换行，只输出译文，不要输出原文。"
+                        "你是专业英译中助手兼Markdown排版专家。请完成以下任务：\n"
+                        "1. 将HTML格式的英文文章转换为Obsidian兼容的Markdown格式"
+                        "（保留图片、链接、标题、粗体、斜体，图片使用 ![alt](url) 语法）\n"
+                        "2. 采用段落对照格式输出：每个英文段落（Markdown格式）后紧跟对应的中文译文段落，段落之间用空行分隔\n"
+                        "3. 纯图片段落无需翻译，保留原样输出\n"
+                        "4. 只输出对照内容，不要任何额外说明"
                     ),
                 },
-                {"role": "user", "content": text[:30000]},
+                {"role": "user", "content": html[:30000]},
             ]
         )
 

@@ -2,7 +2,7 @@ import os
 import subprocess
 import threading
 from concurrent.futures import ThreadPoolExecutor, as_completed
-from datetime import datetime
+from datetime import date, datetime
 from email.utils import parsedate_to_datetime
 from pathlib import Path
 
@@ -82,6 +82,15 @@ def _entry_pub_date(entry) -> str:
 WORKERS = 5  # concurrent articles per feed; stay well under 300 RPM rate limit
 
 
+def _is_recent(entry) -> bool:
+    """Return True if entry pub_date is today or yesterday."""
+    try:
+        entry_date = date.fromisoformat(_entry_pub_date(entry))
+    except ValueError:
+        return True
+    return (date.today() - entry_date).days <= 6
+
+
 def process_feed(feed_config: dict, existing_urls: set[str], llm: LLMClient, output_dir: Path) -> int:
     parsed = feedparser.parse(feed_config["url"])
     output_dir.mkdir(parents=True, exist_ok=True)
@@ -95,6 +104,9 @@ def process_feed(feed_config: dict, existing_urls: set[str], llm: LLMClient, out
         if not url:
             return False
         # Claim the URL under lock to prevent duplicate processing across threads
+        if should_translate and not _is_recent(entry):
+            return False
+
         with lock:
             if url in existing_urls:
                 return False
@@ -118,7 +130,7 @@ def process_feed(feed_config: dict, existing_urls: set[str], llm: LLMClient, out
             llm_client=llm if language == "en" else None,
             translate=should_translate,
         )
-        filename = make_filename(pub_date, title)
+        filename = make_filename(title)
         (output_dir / filename).write_text(md_content, encoding="utf-8")
         return True
 
