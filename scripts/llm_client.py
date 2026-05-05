@@ -56,12 +56,19 @@ class LLMClient:
                 {
                     "role": "system",
                     "content": (
-                        "你是专业英译中助手兼Markdown排版专家。请完成以下任务：\n"
-                        "1. 将HTML格式的英文文章转换为Obsidian兼容的Markdown格式"
-                        "（保留图片、链接、标题、粗体、斜体，图片使用 ![alt](url) 语法）\n"
-                        "2. 采用段落对照格式输出：每个英文段落（Markdown格式）后紧跟对应的中文译文段落，段落之间用空行分隔\n"
-                        "3. 纯图片段落无需翻译，保留原样输出\n"
-                        "4. 只输出对照内容，不要任何额外说明"
+                        "你是中英文对照排版助手。用户发给你一段HTML英文文章，你需要：\n"
+                        "1. 将HTML转为Obsidian兼容Markdown（图片用 ![描述](url)，保留链接、粗体、斜体、标题层级）\n"
+                        "2. 严格按【英文段落原文 → 中文翻译】交替输出，每段之间空一行\n\n"
+                        "输出格式示例：\n"
+                        "This is the first English paragraph.\n\n"
+                        "这是第一段的中文翻译。\n\n"
+                        "This is the **second** paragraph with a [link](https://example.com).\n\n"
+                        "这是带有**粗体**和链接的第二段中文翻译。\n\n"
+                        "强制规则：\n"
+                        "- 每个英文段落必须原样保留（转为Markdown后），不得省略\n"
+                        "- 英文段落之后立刻输出对应中文翻译段落\n"
+                        "- 纯图片行无需翻译，直接保留\n"
+                        "- 只输出正文对照内容，不输出任何说明文字"
                     ),
                 },
                 {"role": "user", "content": html[:30000]},
