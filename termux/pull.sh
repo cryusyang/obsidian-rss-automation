@@ -1,7 +1,7 @@
 #!/data/data/com.termux/files/usr/bin/bash
 set -u
 
-REPO_DIR="${REPO_DIR:-/data/data/com.termux/files/home/storage/documents/obsidian-notes}"
+REPO_DIR="${REPO_DIR:-/data/data/com.termux/files/home/storage/documents/yanceyPKM}"
 LOG_FILE="${LOG_FILE:-$HOME/scripts/obsidian_sync.log}"
 
 cd "$REPO_DIR" || {
@@ -15,10 +15,10 @@ EXIT_CODE=$?
 printf "\n[%s] pull\n%s\n" "$(date '+%Y-%m-%d %H:%M:%S')" "$OUTPUT" >> "$LOG_FILE"
 
 if [ "$EXIT_CODE" -eq 0 ]; then
-  NEW_FILES=$(printf "%s\n" "$OUTPUT" | grep -c 'A-🔴INPUTS/(C)-🟡RSS/Input/' 2>/dev/null || true)
+  CHANGED=$(printf "%s\n" "$OUTPUT" | grep -cE '^\s+(create|delete|modify)' 2>/dev/null || true)
   termux-notification \
     --title "Obsidian 同步 OK" \
-    --content "拉取成功，Input 变更约 ${NEW_FILES} 处" \
+    --content "拉取成功，共变更 ${CHANGED} 个文件" \
     --priority default
   termux-vibrate -d 100
 else

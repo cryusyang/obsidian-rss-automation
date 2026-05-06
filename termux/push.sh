@@ -1,8 +1,7 @@
 #!/data/data/com.termux/files/usr/bin/bash
 set -u
 
-REPO_DIR="${REPO_DIR:-/data/data/com.termux/files/home/storage/documents/obsidian-notes}"
-INPUT_PATH="A-🔴INPUTS/(C)-🟡RSS/Input"
+REPO_DIR="${REPO_DIR:-/data/data/com.termux/files/home/storage/documents/yanceyPKM}"
 LOG_FILE="${LOG_FILE:-$HOME/scripts/obsidian_sync.log}"
 
 cd "$REPO_DIR" || {
@@ -11,7 +10,7 @@ cd "$REPO_DIR" || {
   exit 1
 }
 
-git add "$INPUT_PATH"
+git add -A
 
 if git diff --cached --quiet; then
   PULL_OUT=$(git pull --no-rebase origin main 2>&1)
@@ -20,7 +19,7 @@ if git diff --cached --quiet; then
   if [ "$PULL_CODE" -eq 0 ]; then
     termux-notification \
       --title "Obsidian 同步 OK" \
-      --content "Input 无变更，已拉取远端更新" \
+      --content "无本地变更，已拉取远端更新" \
       --priority low
     termux-vibrate -d 50
     exit 0
@@ -34,7 +33,7 @@ if git diff --cached --quiet; then
 fi
 
 CHANGED=$(git diff --cached --name-only | wc -l | tr -d ' ')
-git commit -m "update: reading progress $(date +%Y-%m-%d_%H:%M)"
+git commit -m "sync: notes update $(date +%Y-%m-%d_%H:%M)"
 
 PULL_OUT=$(git pull --no-rebase origin main 2>&1)
 PULL_CODE=$?
