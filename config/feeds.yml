@@ -15,16 +15,6 @@ llm:
     thinking: false
 
 feeds:
-  - name: "思维重构"
-    url: "http://180.76.102.108:8001/feed/MP_WXS_3990222825.rss"
-    type: wechat
-    Translate: false
-
-  - name: "孤独大脑"
-    url: "http://180.76.102.108:8001/feed/MP_WXS_2398022876.rss"
-    type: wechat
-    Translate: false
-
   - name: "Medium-Imran-Hossain"
     url: "https://medium.com/feed/@s41n1k"
     type: medium
@@ -135,94 +125,24 @@ feeds:
     type: rss
     Translate: true
 
-  - name: "迪哥讲事"
-    url: "http://180.76.102.108:8001/feed/MP_WXS_3231235340.rss"
-    type: wechat
+  - name: "大老王真知·王吉舟高清频道"
+    url: "https://www.youtube.com/feeds/videos.xml?channel_id=UC2EblFj7QGFrJHV_8_gbyMg"
+    type: youtube
     Translate: false
 
-  - name: "大脑重塑计划"
-    url: "http://180.76.102.108:8001/feed/MP_WXS_3072998709.rss"
-    type: wechat
+  - name: "小王来了"
+    url: "https://www.youtube.com/feeds/videos.xml?channel_id=UCtg88O0MNG4k7YGH9Jk8I1A"
+    type: youtube
     Translate: false
 
-  - name: "数字生命卡茲克"
-    url: "http://180.76.102.108:8001/feed/MP_WXS_3223096120.rss"
-    type: wechat
+  - name: "老王来了"
+    url: "https://www.youtube.com/feeds/videos.xml?channel_id=UCH6R98176UDNwAR9LfkKUKA"
+    type: youtube
     Translate: false
 
-  - name: "Rsec"
-    url: "http://180.76.102.108:8001/feed/MP_WXS_3084495540.rss"
-    type: wechat
-    Translate: false
-
-  - name: "骨哥说事"
-    url: "http://180.76.102.108:8001/feed/MP_WXS_2393783531.rss"
-    type: wechat
-    Translate: false
-
-  - name: "安全狗的自我修养"
-    url: "http://180.76.102.108:8001/feed/MP_WXS_3909190694.rss"
-    type: wechat
-    Translate: false
-
-  - name: "小钰的书摘"
-    url: "http://180.76.102.108:8001/feed/MP_WXS_3883741116.rss"
-    type: wechat
-    Translate: false
-
-  - name: "PKMer知识社区"
-    url: "http://180.76.102.108:8001/feed/MP_WXS_3935521800.rss"
-    type: wechat
-    Translate: false
-
-  - name: "老张投资笔记"
-    url: "http://180.76.102.108:8001/feed/MP_WXS_3254914879.rss"
-    type: wechat
-    Translate: false
-
-  - name: "跨境风向标"
-    url: "http://180.76.102.108:8001/feed/MP_WXS_3906579936.rss"
-    type: wechat
-    Translate: false
-
-  - name: "渗透安全HackTwo"
-    url: "http://180.76.102.108:8001/feed/MP_WXS_3878162911.rss"
-    type: wechat
-    Translate: false
-
-  - name: "钱老板创业记"
-    url: "http://180.76.102.108:8001/feed/MP_WXS_3942466596.rss"
-    type: wechat
-    Translate: false
-
-  - name: "郭拽拽"
-    url: "http://180.76.102.108:8001/feed/MP_WXS_3909397489.rss"
-    type: wechat
-    Translate: false
-
-  - name: "小北的梦呓"
-    url: "http://180.76.102.108:8001/feed/MP_WXS_3088688535.rss"
-    type: wechat
-    Translate: false
-
-  - name: "神农Sec"
-    url: "http://180.76.102.108:8001/feed/MP_WXS_3943751267.rss"
-    type: wechat
-    Translate: false
-
-  - name: "西羊石AI视频"
-    url: "http://180.76.102.108:8001/feed/MP_WXS_3944591978.rss"
-    type: wechat
-    Translate: false
-
-  - name: "落落的穿搭笔记"
-    url: "http://180.76.102.108:8001/feed/MP_WXS_3881535963.rss"
-    type: wechat
-    Translate: false
-
-  - name: "Hack分享吧"
-    url: "http://180.76.102.108:8001/feed/MP_WXS_3087552983.rss"
-    type: wechat
+  - name: "老王来了 | 大老王开讲"
+    url: "https://www.youtube.com/feeds/videos.xml?channel_id=UCe_sJH1-qHWhRG0GZPPmFng"
+    type: youtube
     Translate: false
 
   - name: "Medium-Imran-Hossain"
