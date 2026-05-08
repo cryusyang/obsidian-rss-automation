@@ -12,7 +12,9 @@ import yaml
 
 from scripts.article_processor import (
     build_md_content,
+    build_youtube_md_content,
     detect_language,
+    is_member_only,
     make_filename,
     strip_html,
 )
@@ -95,6 +97,7 @@ def process_feed(feed_config: dict, existing_urls: set[str], llm: LLMClient, out
     parsed = feedparser.parse(feed_config["url"])
     output_dir.mkdir(parents=True, exist_ok=True)
     should_translate = bool(feed_config.get("Translate", feed_config.get("translate", False)))
+    is_youtube = feed_config.get("type", "") == "youtube"
 
     lock = threading.Lock()
     count = 0
@@ -103,7 +106,6 @@ def process_feed(feed_config: dict, existing_urls: set[str], llm: LLMClient, out
         url = entry.get("link") or entry.get("guid") or entry.get("id") or ""
         if not url:
             return False
-        # Claim the URL under lock to prevent duplicate processing across threads
         if should_translate and not _is_recent(entry):
             return False
 
@@ -116,20 +118,35 @@ def process_feed(feed_config: dict, existing_urls: set[str], llm: LLMClient, out
         body_html = extract_entry_html(entry)
         body_text = strip_html(body_html) if body_html else ""
         pub_date = _entry_pub_date(entry)
-        language = detect_language(body_text)
-        summary = llm.generate_summary(body_text) if body_text else "（无正文内容）"
-        md_content = build_md_content(
-            title=title,
-            url=url,
-            source=feed_config["name"],
-            pub_date=pub_date,
-            body_content=body_html,
-            body_text=body_text,
-            summary=summary,
-            language=language,
-            llm_client=llm if language == "en" else None,
-            translate=should_translate,
-        )
+
+        if is_youtube:
+            if is_member_only(title) or is_member_only(body_text):
+                return False
+            language = detect_language(body_text)
+            md_content = build_youtube_md_content(
+                title=title,
+                url=url,
+                source=feed_config["name"],
+                pub_date=pub_date,
+                description=body_text,
+                language=language,
+            )
+        else:
+            language = detect_language(body_text)
+            summary = llm.generate_summary(body_text) if body_text else "（无正文内容）"
+            md_content = build_md_content(
+                title=title,
+                url=url,
+                source=feed_config["name"],
+                pub_date=pub_date,
+                body_content=body_html,
+                body_text=body_text,
+                summary=summary,
+                language=language,
+                llm_client=llm if language == "en" else None,
+                translate=should_translate,
+            )
+
         filename = make_filename(title)
         (output_dir / filename).write_text(md_content, encoding="utf-8")
         return True

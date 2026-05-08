@@ -4,6 +4,17 @@ from datetime import date
 from bs4 import BeautifulSoup
 from langdetect import LangDetectException, detect
 
+_MEMBER_ONLY_PATTERNS = [
+    re.compile(r"join this channel", re.IGNORECASE),
+    re.compile(r"members?[-\s]only", re.IGNORECASE),
+    re.compile(r"become a member", re.IGNORECASE),
+    re.compile(r"channel membership", re.IGNORECASE),
+    re.compile(r"仅限会员", re.IGNORECASE),
+    re.compile(r"会员专享", re.IGNORECASE),
+]
+
+_HASHTAG_LINE_RE = re.compile(r"^(#\S+\s*)+$")
+
 
 def detect_language(text: str) -> str:
     try:
@@ -77,3 +88,42 @@ def build_md_content(
 def make_filename(title: str) -> str:
     slug = slugify(title) or "untitled"
     return f"{slug}.md"
+
+
+def is_member_only(text: str) -> bool:
+    return any(p.search(text) for p in _MEMBER_ONLY_PATTERNS)
+
+
+def _strip_hashtag_lines(text: str) -> str:
+    lines = [line for line in text.splitlines() if not _HASHTAG_LINE_RE.match(line.strip())]
+    return "\n".join(lines).strip()
+
+
+def _extract_youtube_id(url: str) -> str | None:
+    match = re.search(r"[?&]v=([A-Za-z0-9_-]{11})", url)
+    return match.group(1) if match else None
+
+
+def build_youtube_md_content(
+    title: str,
+    url: str,
+    source: str,
+    pub_date: str,
+    description: str,
+    language: str,
+) -> str:
+    frontmatter = build_frontmatter(title, url, source, pub_date, language)
+    vid_id = _extract_youtube_id(url)
+    if vid_id:
+        embed = (
+            f'<iframe width="100%" height="400" '
+            f'src="https://www.youtube.com/embed/{vid_id}" '
+            f'frameborder="0" allowfullscreen></iframe>'
+        )
+    else:
+        embed = f"[Watch on YouTube]({url})"
+    body = _strip_hashtag_lines(description) if description else ""
+    parts = [frontmatter, embed]
+    if body:
+        parts.append(body)
+    return "\n\n".join(parts) + "\n"

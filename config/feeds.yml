@@ -15,16 +15,6 @@ llm:
     thinking: false
 
 feeds:
-  - name: "Medium-Imran-Hossain"
-    url: "https://medium.com/feed/@s41n1k"
-    type: medium
-    Translate: false
-
-  - name: "DEep"
-    url: "https://medium.com/feed/@deepk007"
-    type: medium
-    Translate: false
-
   - name: "Raptitude"
     url: "https://www.raptitude.com/feed/"
     type: rss
@@ -130,6 +120,21 @@ feeds:
     type: youtube
     Translate: false
 
+  - name: "小王来了"
+    url: "https://www.youtube.com/feeds/videos.xml?channel_id=UCtg88O0MNG4k7YGH9Jk8I1A"
+    type: youtube
+    Translate: false
+
+  - name: "老王来了"
+    url: "https://www.youtube.com/feeds/videos.xml?channel_id=UCH6R98176UDNwAR9LfkKUKA"
+    type: youtube
+    Translate: false
+
+  - name: "老王来了 | 大老王开讲"
+    url: "https://www.youtube.com/feeds/videos.xml?channel_id=UCe_sJH1-qHWhRG0GZPPmFng"
+    type: youtube
+    Translate: false
+
   - name: "Medium-Imran-Hossain"
     url: "https://medium.com/feed/@s41n1k"
     type: medium
@@ -177,10 +182,5 @@ feeds:
 
   - name: "Abhi Sharma"
     url: "https://medium.com/feed/@a13h1"
-    type: medium
-    Translate: false
-    
-  - name: "DEep"
-    url: "https://medium.com/feed/@deepk007"
     type: medium
     Translate: false
