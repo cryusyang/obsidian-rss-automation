@@ -130,47 +130,6 @@ feeds:
     type: youtube
     Translate: false
 
-  - name: "小王来了"
-    url: "https://www.youtube.com/feeds/videos.xml?channel_id=UCtg88O0MNG4k7YGH9Jk8I1A"
-    type: youtube
-    Translate: false
-
-  - name: "老王来了"
-    url: "https://www.youtube.com/feeds/videos.xml?channel_id=UCH6R98176UDNwAR9LfkKUKA"
-    type: youtube
-    Translate: false
-
-  - name: "老王来了 | 大老王开讲"
-    url: "https://www.youtube.com/feeds/videos.xml?channel_id=UCe_sJH1-qHWhRG0GZPPmFng"
-    type: youtube
-    Translate: false
-
-  - name: "Zsolt's Visual Personal Knowledge Management"
-  - url: "https://www.youtube.com/feeds/videos.xml?channel_id=UCC0gns4a9fhVkGkngvSumAQ"
-  - type: youtube
-  - Translate: false
-
-  - name: "Linking Your Thinking with Nick Milo"
-  - url: "https://www.youtube.com/feeds/videos.xml?channel_id=UC85D7ERwhke7wVqskV_DZUA"
-  - type: youtube
-  - Translate: false
-
-  - name: "Summer Hailstones 夏冰雹"
-  - url: "https://www.youtube.com/feeds/videos.xml?channel_id=UCBWvwMc7Dae3cpg-MiiS1jQ"
-  - type: youtube
-  - Translate: false
-
-  - name: "零度解说"
-  - url: "https://www.youtube.com/feeds/videos.xml?channel_id=UCvijahEyGtvMpmMHBu4FS2w"
-  - type: youtube
-  - Translate: false
-
-  - name: "小Lin说"
-  - url: "https://www.youtube.com/feeds/videos.xml?channel_id=UCilwQlk62k1z7aUEZPOB6yw"
-  - type: youtube
-  - Translate: false
-
-
   - name: "Medium-Imran-Hossain"
     url: "https://medium.com/feed/@s41n1k"
     type: medium
